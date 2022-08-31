@@ -1,3 +1,4 @@
+import { InstanceMap } from "./instanceMap";
 import { instantiate } from "./instantiate";
 export default class CompositeComponent {
     constructor(element) {
@@ -27,6 +28,7 @@ export default class CompositeComponent {
     instantiate() {
         if (this.component.isClassComponent) {
             this.instance = new this.component(this.props);
+            InstanceMap.set(this.instance, this);
         } else {
             this.instance = null;   // 函数组件不需要实例化
         }
