@@ -1,3 +1,5 @@
+import { instantiate } from "./instantiate";
+
 export default class DomComponent {
     constructor(element) {
         this.element = element;
@@ -8,9 +10,30 @@ export default class DomComponent {
     mount() {
         this.createElement();
         this.setAttribute();
-        
+        this.mountChildren();
+
         console.log(this.node);
         return this.node;
+    }
+
+    mountChildren() {
+        let children = this.props.children || [];
+
+        if (!Array.isArray(children)) {
+            children = [children];
+        }
+        
+        const nodeList = [];
+        children.forEach(childElement => {
+            const node = instantiate(childElement).mount();
+            if (node) {
+                nodeList.push(node);
+            }
+        });
+        // 挂载子节点
+        nodeList.forEach(node => {
+            this.node.appendChild(node);
+        });
     }
 
     createElement() {
