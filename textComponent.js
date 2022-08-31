@@ -3,6 +3,10 @@ export default class TextComponent {
         this.text = element;
     }
 
+    getHostNode() {
+        return this.node;
+    }
+
     mount() {
         this.createElement();
 

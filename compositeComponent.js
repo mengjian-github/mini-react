@@ -13,6 +13,10 @@ export default class CompositeComponent {
 
     mount() {
         this.instantiate();
+        return this.toMount();
+    }
+
+    toMount() {
         this.render();
         // 递归执行mount
         if (this.renderedElement) {
@@ -25,11 +29,13 @@ export default class CompositeComponent {
     update(state) {
         // 更新state
         this.instance.state = {...this.instance.state, ...state};
-        // 重新触发render
-        this.render();
-        // 先挂载
-        this.unmount();
 
+        // 销毁重建
+        const hostNode = this.getHostNode();
+        this.unmount();
+        const newNode = this.toMount();
+        // 替换DOM节点（这里简便起见将更新DOM操作写在这里，理论上React组件和平台无关，应该依赖注入）
+        hostNode.parentNode.replaceChild(newNode, hostNode);
     }
 
     unmount() {

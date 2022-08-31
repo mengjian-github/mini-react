@@ -53,6 +53,7 @@ export default class DomComponent {
         this.childComponents.forEach(child => {
             child.unmount();
         });
+        this.node = null;
     }
 
     createElement() {
