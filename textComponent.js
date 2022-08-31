@@ -1,23 +1,29 @@
 export default class TextComponent {
-    constructor(element) {
-        this.text = element;
-    }
+  constructor(element) {
+    this.text = element;
+  }
 
-    getHostNode() {
-        return this.node;
-    }
+  getHostNode() {
+    return this.node;
+  }
 
-    mount() {
-        this.createElement();
+  mount() {
+    this.createElement();
 
-        return this.node;
-    }
+    return this.node;
+  }
 
-    unmount() {
-        this.node = null;
-    }
-    
-    createElement() {
-        this.node = document.createTextNode(this.text);
-    }
+  receive(nextElement) {
+    this.text = nextElement;
+    // 直接更改文本内容
+    this.node.textContent = this.text;
+  }
+
+  unmount() {
+    this.node = null;
+  }
+
+  createElement() {
+    this.node = document.createTextNode(this.text);
+  }
 }
