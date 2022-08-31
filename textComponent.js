@@ -6,7 +6,6 @@ export default class TextComponent {
     mount() {
         this.createElement();
 
-        console.log(this.node);
         return this.node;
     }
     

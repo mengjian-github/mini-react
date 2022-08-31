@@ -7,7 +7,6 @@ export default class CompositeComponent {
     }
 
     mount() {
-        console.log(this.element);
         this.instantiate();
         this.render();
         // 递归执行mount

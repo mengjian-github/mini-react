@@ -12,7 +12,6 @@ export default class DomComponent {
         this.setAttribute();
         this.mountChildren();
 
-        console.log(this.node);
         return this.node;
     }
 
