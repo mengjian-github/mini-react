@@ -9,6 +9,6 @@ export class Component {
 
     setState(state) {
         const controller = InstanceMap.get(this);
-        console.log(controller);
+        controller.update(state);
     }
 }

@@ -7,14 +7,33 @@ export default class CompositeComponent {
         this.props = element.props;
     }
 
+    getHostNode() {
+        return this.renderedComponent?.getHostNode();
+    }
+
     mount() {
         this.instantiate();
         this.render();
         // 递归执行mount
         if (this.renderedElement) {
-            return instantiate(this.renderedElement).mount();
+            this.renderedComponent = instantiate(this.renderedElement);
+            return this.renderedComponent.mount();
         }
         return null;
+    }
+
+    update(state) {
+        // 更新state
+        this.instance.state = {...this.instance.state, ...state};
+        // 重新触发render
+        this.render();
+        // 先挂载
+        this.unmount();
+
+    }
+
+    unmount() {
+        this.renderedComponent?.unmount();
     }
 
     render() {

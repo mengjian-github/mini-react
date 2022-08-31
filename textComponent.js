@@ -8,6 +8,10 @@ export default class TextComponent {
 
         return this.node;
     }
+
+    unmount() {
+        this.node = null;
+    }
     
     createElement() {
         this.node = document.createTextNode(this.text);

@@ -8,6 +8,10 @@ export default class DomComponent {
         this.props = element.props;
     }
 
+    getHostNode() {
+        return this.node;
+    }
+
     mount() {
         this.createElement();
         this.setAttribute();
@@ -22,17 +26,32 @@ export default class DomComponent {
         if (!Array.isArray(children)) {
             children = [children];
         }
+
         
         const nodeList = [];
+        const childComopnents = [];
         children.forEach(childElement => {
-            const node = instantiate(childElement).mount();
+            const component = instantiate(childElement);
+            if (component) {
+                childComopnents.push(component);
+            }
+            const node = component.mount();
             if (node) {
                 nodeList.push(node);
             }
         });
+
+        this.childComponents = childComopnents;
+
         // 挂载子节点
         nodeList.forEach(node => {
             this.node.appendChild(node);
+        });
+    }
+
+    unmount() {
+        this.childComponents.forEach(child => {
+            child.unmount();
         });
     }
 
