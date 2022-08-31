@@ -1,3 +1,4 @@
+import EventListener from "./event";
 import { instantiate } from "./instantiate";
 
 export default class DomComponent {
@@ -44,6 +45,8 @@ export default class DomComponent {
             if (attribute !== 'children') {
                 if (attribute === 'className') {
                     this.node.setAttribute('class', this.props[attribute])
+                } else if (EventListener.isEventAttribute(attribute)) {
+                    EventListener.listen(attribute, this.props[attribute], this.node);
                 } else {
                     this.node.setAttribute(attribute, this.props[attribute]);
                 }
